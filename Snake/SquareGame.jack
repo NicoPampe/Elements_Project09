@@ -81,6 +81,11 @@ class SquareGame {
                 let direction = 4;
             }
 
+            if (collisionHeadFood()){
+                do foodSquare.dispose();
+                do createFoodSquare();
+            }
+
             // waits for the key to be released.
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
@@ -108,6 +113,12 @@ class SquareGame {
 
         do Sys.wait(5); // Delays the next movement.
         return;
+    }
+
+    /** Checks the collision between the Head of the snake and the food */
+    method boolean collisionHeadFood() {
+
+        return false;
     }
 
     /** Food square created for the snake to get */
