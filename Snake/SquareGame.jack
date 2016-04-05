@@ -13,24 +13,20 @@
  * The 'q' key is used to quit the game.
  */
 class SquareGame {
-    // random seed
-    field int seed;
 
     // The square
     field Square square;
-
-    // The food square
-    field FoodSquare foodSquare;
+    field Body segment;
 
     // The square's movement direction
     field int direction; // 0=none,1=up,2=down,3=left,4=right
 
     /** Constructs a new Square Game. */
     constructor SquareGame new() {
-        let seed = 10; // We don't have system time, so it will be "Random"
-
         let square = Square.new(0, 0, 30);
         let direction = 0;
+
+	let segment = Body.new(30, 30, 30);
 
         return this;
     }
@@ -49,8 +45,6 @@ class SquareGame {
         var boolean exit;
 
         let exit = false;
-
-        do createFoodSquare();
 
         while (~exit) {
             // waits for a key to be pressed.
@@ -87,6 +81,10 @@ class SquareGame {
 
     /** Moves the square by 2 pixels in the current direction. */
     method void moveSquare() {
+	var int tempX, tempY;
+	let tempX = square.getX();
+	let tempY = square.getY();
+
         if (direction = 1) {
             do square.moveUp();
         }
@@ -100,44 +98,9 @@ class SquareGame {
             do square.moveRight();
         }
 
+	do body.moveTo( tempX, tempY );
+
         do Sys.wait(5); // Delays the next movement.
         return;
-    }
-
-    /** Food square created for the snake to get */
-    method void createFoodSquare() {
-        var int foodSize;
-
-        let foodSize = 30;
-
-        let foodSquare = Square.new(randRange(254 - foodSize),
-                                    randRange(254 - foodSize),
-                                    foodSize);
-        return;
-    }
-
-    /** Return a random number fro 0..range */
-    method int randRange(int range) {
-        var int mask;
-        var int val;
-
-        let mask = 1;
-        while (mask < range) {
-            let mask = mask * 2 + 1;
-        }
-
-        let val = rand() & mask;
-        while (val > range) {
-            let val = rand() & mask;
-        }
-        return val;
-    }
-
-    method int rand() {
-        let seed = seed + 20251;
-        if (seed < 0) {
-            let seed = seed - 32767 - 1;
-        }
-        return seed;
     }
 }
