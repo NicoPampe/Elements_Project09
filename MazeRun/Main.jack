@@ -1,5 +1,6 @@
 class Main{
     function void main(){
+        var boolean ok;
         var String s;
         var Char userInput;
 
@@ -11,8 +12,17 @@ class Main{
         do Output.println();
 
         let userInput = " ";
-        while(~(userInput = "q")) {
+        let ok = false;
+        while(~ok) {
             let userInput = Keyboard.readChar();
+
+            do Output.println();
+
+            if (userInput = 81) {
+                do Output.printString("Fine, guess I'll quit.");
+                do Output.println();
+                let ok = true;
+            }
         }
 
         return;
