@@ -27,6 +27,7 @@ class Body{
 		if( ~(nextBody = null) ){
 			do nextBody.moveTo( tempX, tempY );
 		}
+		do body.draw();
 		return;	
 	}
 }

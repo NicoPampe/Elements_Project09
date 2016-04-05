@@ -16,7 +16,7 @@ class SquareGame {
 
     // The square
     field Square square;
-    field Body segment;
+    field Body body;
 
     // The square's movement direction
     field int direction; // 0=none,1=up,2=down,3=left,4=right
@@ -26,7 +26,7 @@ class SquareGame {
         let square = Square.new(0, 0, 30);
         let direction = 0;
 
-	let segment = Body.new(30, 30, 30);
+	let body = Body.new(30, 30, 30);
 
         return this;
     }
@@ -103,4 +103,40 @@ class SquareGame {
         do Sys.wait(5); // Delays the next movement.
         return;
     }
+    
+}
+method void createFoodSquare() {
+	var int foodSize;
+
+ 	let foodSize = 30;
+
+ 	let foodSquare = Square.new(randRange(254 - foodSize),
+			     randRange(254 - foodSize),
+			     foodSize);
+ 	return;
+}
+
+/** Return a random number fro 0..range */
+method int randRange(int range) {
+ var int mask;
+ var int val;
+
+ let mask = 1;
+ while (mask < range) {
+     let mask = mask * 2 + 1;
+ }
+
+ let val = rand() & mask;
+ while (val > range) {
+     let val = rand() & mask;
+ }
+ return val;
+}
+
+method int rand() {
+ let seed = seed + 20251;
+ if (seed < 0) {
+     let seed = seed - 32767 - 1;
+ }
+ return seed;
 }
