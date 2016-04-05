@@ -11,6 +11,83 @@ class Main {
     /** Initializes a new game and starts it. */    
     function void main() {
         var SquareGame game;
+        var int x, y, debounce;
+        var int size;
+        var char key;
+        let x = 400;
+        let y = 120;
+        let debounce = 0;
+        let size = 32;
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x,y,x+size, y+size);
+
+        do Output.println();
+        do Output.printString("                      Snake Game");
+
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(160,120,352,220);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(224,128,288,144);
+        do Screen.drawRectangle(224,162,288,178);
+        do Screen.drawRectangle(224,192,288,212); 
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                              Play");
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                             Options");
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                             Score");
+        
+        do Screen.setColor(true);
+        do Screen.drawRectangle(160,120,224,220);
+
+        while (true){
+            let key = Keyboard.keyPressed();
+            if (debounce = 0) {
+                let debounce = 1;
+                if (key = 131) {
+                    if (y > 120){
+                        do Screen.setColor(false);
+                        do Screen.drawRectangle(x,y,x+size, y+size);
+                        let y = y - 38;
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(x,y,x+size, y+size);
+                    }
+                }
+
+                if (key = 133) {
+                    if (y < 220){
+                        do Screen.setColor(false);
+                        do Screen.drawRectangle(x,y,x+size, y+size);
+                        let y = y + 38;
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(x,y,x+size, y+size);
+                    }
+
+                }
+            }
+            if (key = 0){
+                let debounce = 0;
+            }
+        }
 
         let game = SquareGame.new();
         do game.run();
