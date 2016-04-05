@@ -49,7 +49,7 @@ class SquareGame {
         var boolean exit;
 
         let exit = false;
-        
+
         do createFoodSquare();
 
         while (~exit) {
@@ -76,6 +76,7 @@ class SquareGame {
             }
 
             if (collisionHeadFood()){
+                do foodSquare.erase();
                 do foodSquare.dispose();
                 do createFoodSquare();
             }
@@ -117,7 +118,10 @@ class SquareGame {
     
     /** Checks the collision between the Head of the snake and the food */
     method boolean collisionHeadFood() {
-
+        if(square.getX() > foodSquare.getX() & 
+            square.getX() < foodSquare.getSize() + foodSquare.getX()) {
+            return true;
+        }
         return false;
     }
 

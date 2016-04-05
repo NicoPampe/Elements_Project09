@@ -104,4 +104,26 @@ class FoodSquare {
         }
         return;
     }
+
+    method int getX(){
+        return x;
+    }
+
+    method int getY(){
+        return y;
+    }
+
+    method void setX(int Ax){
+        let x = Ax;
+        return;
+    }
+
+    method void setY(int Ay){
+        let y = Ay;
+        return;
+    }
+
+    method int getSize() {
+        return size;
+    }
 }
