@@ -1,0 +1,22 @@
+class Main{
+    function void main(){
+        var String s;
+        var Char userInput;
+
+        do Output.printString("Welcome to Our Maze!");
+        do Output.println();
+        do Output.printString("Can you find your way out?");
+        do Output.println();
+        do Output.printString("Press any button to contiue");
+        do Output.println();
+
+        let userInput = " ";
+        while(~(userInput = "q")) {
+            let userInput = Keyboard.readChar();
+        }
+
+        return;
+    }
+
+
+}
