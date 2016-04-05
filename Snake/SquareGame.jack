@@ -17,6 +17,10 @@ class SquareGame {
     // The square
     field Square square;
     field Body body;
+    // random seed
+    field int seed;
+    //The food square
+    field FoodSquare foodSquare;
 
     // The square's movement direction
     field int direction; // 0=none,1=up,2=down,3=left,4=right
@@ -103,8 +107,6 @@ class SquareGame {
         do Sys.wait(5); // Delays the next movement.
         return;
     }
-    
-}
 method void createFoodSquare() {
 	var int foodSize;
 
@@ -139,4 +141,5 @@ method int rand() {
      let seed = seed - 32767 - 1;
  }
  return seed;
+}
 }
