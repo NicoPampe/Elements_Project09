@@ -1,0 +1,33 @@
+class Body{
+	
+	field Square body;
+	field Body nextBody;
+
+	constructor Body new(int x, int y, int size){
+		let body = Square.new(x, y, size);
+		return this;
+	}
+
+	method void dispose(){
+		do body.dispose();
+		if( ~(nextBody = null) ){
+			do nextBody.dispose();
+		}
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method void moveTo( int Ax, int Ay ){
+		var int tempX, tempY;
+		do body.erase();
+		let tempX = body.getX();
+		let tempY = body.getY();
+		do body.setX( Ax );
+		do body.setY( Ay );
+		if( ~(nextBody = null) ){
+			do nextBody.moveTo( tempX, tempY );
+		}
+		do body.draw();
+		return;	
+	}
+}

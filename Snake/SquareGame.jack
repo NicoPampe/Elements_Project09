@@ -13,13 +13,13 @@
  * The 'q' key is used to quit the game.
  */
 class SquareGame {
-    // random seed
-    field int seed;
 
     // The square
     field Square square;
-
-    // The food square
+    field Body body;
+    // random seed
+    field int seed;
+    //The food square
     field FoodSquare foodSquare;
 
     // The square's movement direction
@@ -27,10 +27,10 @@ class SquareGame {
 
     /** Constructs a new Square Game. */
     constructor SquareGame new() {
-        let seed = 10; // We don't have system time, so it will be "Random"
-
         let square = Square.new(0, 0, 30);
         let direction = 0;
+
+	let body = Body.new(30, 30, 30);
 
         return this;
     }
@@ -49,7 +49,7 @@ class SquareGame {
         var boolean exit;
 
         let exit = false;
-
+        
         do createFoodSquare();
 
         while (~exit) {
@@ -61,12 +61,6 @@ class SquareGame {
 
             if (key = 81) {
                 let exit = true;
-            }
-            if (key = 90) {
-                do square.decSize();
-            }
-            if (key = 88) {
-                do square.incSize();
             }
             if (key = 131) {
                 let direction = 1;
@@ -98,6 +92,10 @@ class SquareGame {
 
     /** Moves the square by 2 pixels in the current direction. */
     method void moveSquare() {
+        var int tempX, tempY;
+    	let tempX = square.getX();
+    	let tempY = square.getY();
+
         if (direction = 1) {
             do square.moveUp();
         }
@@ -111,10 +109,12 @@ class SquareGame {
             do square.moveRight();
         }
 
+        do body.moveTo( tempX, tempY );
+
         do Sys.wait(5); // Delays the next movement.
         return;
     }
-
+    
     /** Checks the collision between the Head of the snake and the food */
     method boolean collisionHeadFood() {
 
@@ -123,14 +123,14 @@ class SquareGame {
 
     /** Food square created for the snake to get */
     method void createFoodSquare() {
-        var int foodSize;
+    	var int foodSize;
 
-        let foodSize = 30;
+     	let foodSize = 30;
 
-        let foodSquare = Square.new(randRange(254 - foodSize),
+     	let foodSquare = Square.new(randRange(254 - foodSize),
                                     randRange(254 - foodSize),
                                     foodSize);
-        return;
+     	return;
     }
 
     /** Return a random number fro 0..range */
