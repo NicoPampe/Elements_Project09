@@ -210,25 +210,73 @@ call Square.getX 1
 push this 3
 call FoodSquare.getX 1
 gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
 push this 0
 call Square.getX 1
+and
 push this 3
 call FoodSquare.getX 1
 lt
 push this 3
 call FoodSquare.getSize 1
 add
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label IF_FALSE0
+push this 3
+call FoodSquare.getX 1
+push this 3
+call FoodSquare.getSize 1
+add
+push this 0
+call Square.getX 1
+gt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
+push this 3
+call FoodSquare.getX 1
+push this 3
+call FoodSquare.getSize 1
+add
+push this 0
+call Square.getX 1
+push this 0
+call Square.getSize 1
+add
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push constant 0
 not
 return
+label IF_FALSE2
 label IF_FALSE1
-label IF_FALSE0
+push this 3
+call FoodSquare.getX 1
+push this 0
+call Square.getX 1
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 3
+call FoodSquare.getX 1
+push this 0
+call Square.getX 1
+push this 0
+call Square.getSize 1
+add
+lt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+not
+return
+label IF_FALSE4
+label IF_FALSE3
 push constant 0
 return
 function SquareGame.createFoodSquare 1
@@ -237,15 +285,11 @@ pop pointer 0
 push constant 30
 pop local 0
 push pointer 0
-push constant 254
+push constant 510
 push local 0
 sub
 call SquareGame.randRange 2
-push pointer 0
-push constant 254
-push local 0
-sub
-call SquareGame.randRange 2
+push constant 50
 push local 0
 call Square.new 3
 pop this 3
