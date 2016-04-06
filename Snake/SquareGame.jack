@@ -57,6 +57,7 @@ class SquareGame {
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
+                do doCollisionHeadFood();
             }
 
             if (key = 81) {
@@ -75,19 +76,13 @@ class SquareGame {
                 let direction = 4;
             }
 
-            if (collisionHeadFood()){
-                do foodSquare.erase();
-                do foodSquare.dispose();
-                do createFoodSquare();
-            }
-
             // waits for the key to be released.
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
+                do doCollisionHeadFood();
             }
         }
-            
         return;
 	}
 
@@ -116,12 +111,30 @@ class SquareGame {
         return;
     }
     
+    method void doCollisionHeadFood() {
+        if (collisionHeadFood()){
+            do foodSquare.erase();
+            do foodSquare.dispose();
+            do createFoodSquare();
+        }
+        return;
+    }
+
     /** Checks the collision between the Head of the snake and the food */
     method boolean collisionHeadFood() {
-        if(square.getX() > foodSquare.getX() & 
-            square.getX() < foodSquare.getSize() + foodSquare.getX()) {
-            return true;
+        
+        if(square.getX() > foodSquare.getX() ) {
+            if(square.getX() < foodSquare.getX() + foodSquare.getSize()) {
+                return true;
+            }
         }
+        
+        /*
+        if(square.getX() > foodSquare.getX()
+            & square.getX() < foodSquare.getSize() + foodSquare.getX()
+            & )
+
+        */
         return false;
     }
 

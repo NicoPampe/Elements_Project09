@@ -51,6 +51,9 @@ pop local 0
 push pointer 0
 call SquareGame.moveSquare 1
 pop temp 0
+push pointer 0
+call SquareGame.doCollisionHeadFood 1
+pop temp 0
 goto WHILE_EXP1
 label WHILE_END1
 push local 0
@@ -99,21 +102,6 @@ label IF_TRUE4
 push constant 4
 pop this 4
 label IF_FALSE4
-push pointer 0
-call SquareGame.collisionHeadFood 1
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push this 3
-call FoodSquare.erase 1
-pop temp 0
-push this 3
-call FoodSquare.dispose 1
-pop temp 0
-push pointer 0
-call SquareGame.createFoodSquare 1
-pop temp 0
-label IF_FALSE5
 label WHILE_EXP2
 push local 0
 push constant 0
@@ -125,6 +113,9 @@ call Keyboard.keyPressed 0
 pop local 0
 push pointer 0
 call SquareGame.moveSquare 1
+pop temp 0
+push pointer 0
+call SquareGame.doCollisionHeadFood 1
 pop temp 0
 goto WHILE_EXP2
 label WHILE_END2
@@ -191,6 +182,26 @@ call Sys.wait 1
 pop temp 0
 push constant 0
 return
+function SquareGame.doCollisionHeadFood 0
+push argument 0
+pop pointer 0
+push pointer 0
+call SquareGame.collisionHeadFood 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+call FoodSquare.erase 1
+pop temp 0
+push this 3
+call FoodSquare.dispose 1
+pop temp 0
+push pointer 0
+call SquareGame.createFoodSquare 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
 function SquareGame.collisionHeadFood 0
 push argument 0
 pop pointer 0
@@ -199,21 +210,24 @@ call Square.getX 1
 push this 3
 call FoodSquare.getX 1
 gt
-push this 0
-call Square.getX 1
-and
-push this 3
-call FoodSquare.getSize 1
-lt
-push this 3
-call FoodSquare.getX 1
-add
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
+push this 0
+call Square.getX 1
+push this 3
+call FoodSquare.getX 1
+lt
+push this 3
+call FoodSquare.getSize 1
+add
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push constant 0
 not
 return
+label IF_FALSE1
 label IF_FALSE0
 push constant 0
 return
