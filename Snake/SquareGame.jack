@@ -122,23 +122,36 @@ class SquareGame {
 
     /** Checks the collision between the Head of the snake and the food */
     method boolean collisionHeadFood() {
+        var boolean xCollision, yCollision;
+        let xCollision = false;
+        let yCollision = false;
+
         /* Logic for X */
         if( (foodSquare.getX() + foodSquare.getSize()) > (square.getX()) ) { 
             if( (foodSquare.getX() + foodSquare.getSize()) < (square.getX() + square.getSize()) ) {
-                return true;
+                let xCollision = true;
             }
         }
         if( (foodSquare.getX()) > (square.getX()) ) { 
             if( (foodSquare.getX()) < (square.getX() + square.getSize()) ) {
-                return true;
+                let xCollision = true;
             }
         }
 
         /* Logic for Y */
-
+        if( (foodSquare.getY() + foodSquare.getSize()) > (square.getY()) ) { 
+            if( (foodSquare.getY() + foodSquare.getSize()) < (square.getY() + square.getSize()) ) {
+                let yCollision = true;
+            }
+        }
+        if( (foodSquare.getY()) > (square.getY()) ) { 
+            if( (foodSquare.getY()) < (square.getY() + square.getSize()) ) {
+                let yCollision = true;
+            }
+        }
 
         /* No collision */
-        return false;
+        return xCollision & yCollision;
     }
 
     /** Food square created for the snake to get */
