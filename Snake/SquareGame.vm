@@ -331,7 +331,11 @@ push constant 510
 push local 0
 sub
 call SquareGame.randRange 2
-push constant 50
+push pointer 0
+push constant 254
+push local 0
+sub
+call SquareGame.randRange 2
 push local 0
 call Square.new 3
 pop this 3

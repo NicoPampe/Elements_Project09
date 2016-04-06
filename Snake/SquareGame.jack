@@ -161,9 +161,8 @@ class SquareGame {
      	let foodSize = 30;
 
      	let foodSquare = Square.new(randRange(510 - foodSize),
-                                    50,
+                                    randRange(254 - foodSize),
                                     foodSize);
-        // randRange(254 - foodSize)
      	return;
     }
 
