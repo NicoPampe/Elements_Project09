@@ -1,15 +1,13 @@
-class menu {
+class Menu {
 
-    var int up,down,left,right,enter;
+    field int up,down,left,right,enter;
 
-    function Menu new(){
+    constructor Menu new(){
         let up = 131;
         let down = 133;
         return this;
     }
-    function void drawStatic() {
-        do Screen.setColor(true);
-        do Screen.drawRectangle(x,y,x+size, y+size);
+    method void drawStatic() {
 
         do Output.println();
         do Output.printString("                      Snake Game");
@@ -49,9 +47,11 @@ class menu {
         do Screen.setColor(true);
         do Screen.drawRectangle(160,120,224,220);
 
+	return;
+
     }
 
-    function void drawDynamic(int pos){
+    method void drawDynamic(int pos){
         var int x, y, size;
         let x = 400;
         let y = pos * 32;
@@ -62,9 +62,16 @@ class menu {
 
         do Screen.setColor(true);
         do Screen.drawRectangle(x,y,x+size, y+size);
+	return;
     }
-    function void run(){
-        var int debounce, pos;
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run(){
+        var int debounce, pos, key;
         let debounce = 0;
         let pos = 0;
         do drawStatic();
@@ -79,7 +86,7 @@ class menu {
                 }
 
                 if (key = down) {
-                    if (y < 2){
+                    if (pos < 2){
                         let pos = pos + 1;
                     }
                 }
@@ -87,7 +94,8 @@ class menu {
             if (key = 0){
                 let debounce = 0;
             }
-            do drawStatic(pos);
+            do drawDynamic(pos);
         }
+        return;
     }
 }
