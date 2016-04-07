@@ -107,7 +107,7 @@ class SquareGame {
 
 	//do body.moveTo( tempX, tempY );
 
-        do Sys.wait(20); // Delays the next movement.
+        do Sys.wait(30); // Delays the next movement.
         return;
     }
     
@@ -116,6 +116,7 @@ class SquareGame {
             do foodSquare.erase();
             do foodSquare.dispose();
             do createFoodSquare();
+	    do square.addBody();
         }
         return;
     }
@@ -158,7 +159,7 @@ class SquareGame {
     method void createFoodSquare() {
     	var int foodSize;
 
-     	let foodSize = 30;
+     	let foodSize = 10;
 
      	let foodSquare = Square.new(randRange(510 - foodSize),
                                     randRange(254 - foodSize),
