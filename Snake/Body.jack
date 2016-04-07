@@ -30,4 +30,14 @@ class Body{
 		do body.draw();
 		return;	
 	}
+
+	method void addBody(){
+		if( nextBody = null ){	
+			let nextBody = Body.new( body.getX(), body.getY(), body.getSize() );
+		}
+		else{
+			do nextBody.addBody();
+		}
+		return;
+	}
 }

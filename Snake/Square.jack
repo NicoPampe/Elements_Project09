@@ -1,10 +1,13 @@
-class Square {
+class Square{
 
     // Location on the screen
     field int x, y;
 
     // The size of the square
     field int size;
+
+    //The start of the tail segment(Stored as a linked list)
+    field Body body;
 
     /** Constructs a new square with a given location and size. */
     constructor Square new(int Ax, int Ay, int Asize) {
@@ -38,49 +41,74 @@ class Square {
     }
 
     /** Moves up by 2 pixels. */
-    method void moveUp() {
-        if (y > 1) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
-            let y = y - 2;
-            do Screen.setColor(true);
-            do Screen.drawRectangle(x, y, x + size, y + 1);
+    method void moveUp() {	
+	var int tempX, tempY;
+        if ((y - size ) > (-1)) {
+
+            //do Screen.setColor(false);
+            //do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+	    let tempX = x;
+            let tempY = y;
+	    do erase();
+            let y = y - size;
+	    do draw();
+	    do body.moveTo( tempX, tempY );
+            //do Screen.setColor(true);
+            //do Screen.drawRectangle(x, y, x + size, y + 1);
         }
         return;
     }
 
     /** Moves down by 2 pixels. */
     method void moveDown() {
-        if ((y + size) < 254) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle(x, y, x + size, y + 1);
-            let y = y + 2;
-            do Screen.setColor(true);
-            do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+	var int tempX, tempY;
+        if ((y + size) < (256 - size )) {
+            //do Screen.setColor(false);
+            //do Screen.drawRectangle(x, y, x + size, y + 1);
+	    let tempX = x;
+            let tempY = y;
+	    do erase();
+            let y = y + size;
+	    do draw();
+	    do body.moveTo( tempX, tempY );
+            //do Screen.setColor(true);
+            //do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
         }
         return;
     }
 
     /** Moves left by 2 pixels. */
     method void moveLeft() {
-        if (x > 1) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
-            let x = x - 2;
-            do Screen.setColor(true);
-            do Screen.drawRectangle(x, y, x + 1, y + size);
+	var int tempX, tempY;
+        if ((x - size) > (-1)) {
+            //do Screen.setColor(false);
+            //do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+	    let tempX = x;
+            let tempY = y;
+	    do erase();
+            let x = x - size;
+	    do draw();
+	    do body.moveTo( tempX, tempY );
+            //do Screen.setColor(true);
+            //do Screen.drawRectangle(x, y, x + 1, y + size);
         }
         return;
     }
 
     /** Moves right by 2 pixels. */
     method void moveRight() {
-        if ((x + size) < 510) {
-            do Screen.setColor(false);
-            do Screen.drawRectangle(x, y, x + 1, y + size);
-            let x = x + 2;
-            do Screen.setColor(true);
-            do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+	var int tempX, tempY;
+        if ((x + size) < (512 - size)) {
+            //do Screen.setColor(false);
+            //do Screen.drawRectangle(x, y, x + 1, y + size);
+	    let tempX = x;
+            let tempY = y;
+	    do erase();
+            let x = x + size;
+	    do draw();
+	    do body.moveTo( tempX, tempY );
+            //do Screen.setColor(true);
+            //do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
         }
         return;
     }
@@ -93,6 +121,10 @@ class Square {
 	return y;
     }
 
+   method int getSize(){
+	return size;
+   }
+
     method void setX(int Ax){
 	let x = Ax;
 	return;
@@ -102,4 +134,14 @@ class Square {
 	let y = Ay;
 	return;
     }
+   
+   method void initializeBody(){
+  	let body = Body.new( x+size, y, size );
+	return;
+   }
+
+   method void addBody(){
+	do body.addBody();
+	return;
+   }
 }

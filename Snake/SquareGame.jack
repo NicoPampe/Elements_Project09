@@ -16,7 +16,6 @@ class SquareGame {
 
     // The square
     field Square square;
-    field Body body;
     // random seed
     field int seed;
     //The food square
@@ -27,10 +26,9 @@ class SquareGame {
 
     /** Constructs a new Square Game. */
     constructor SquareGame new() {
-        let square = Square.new(0, 0, 30);
+        let square = Square.new(0, 0, 10);
+	do square.initializeBody();
         let direction = 0;
-
-	let body = Body.new(30, 30, 30);
 
         return this;
     }
@@ -56,20 +54,22 @@ class SquareGame {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
             }
-
+	    if (key = 71) {
+		do square.addBody();
+            }
             if (key = 81) {
                 let exit = true;
             }
-            if (key = 131) {
+            if ((key = 131) & ~(direction = 2)) {
                 let direction = 1;
             }
-            if (key = 133) {
+            if ((key = 133) & ~(direction = 1)) {
                 let direction = 2;
             }
-            if (key = 130) {
+            if ((key = 130) & ~(direction = 4)) {
                 let direction = 3;
             }
-            if (key = 132) {
+            if ((key = 132) & ~(direction = 3)) {
                 let direction = 4;
             }
 
@@ -85,9 +85,9 @@ class SquareGame {
 
     /** Moves the square by 2 pixels in the current direction. */
     method void moveSquare() {
-	var int tempX, tempY;
-	let tempX = square.getX();
-	let tempY = square.getY();
+	//var int tempX, tempY;
+	//let tempX = square.getX();
+	//let tempY = square.getY();
 
         if (direction = 1) {
             do square.moveUp();
@@ -102,9 +102,9 @@ class SquareGame {
             do square.moveRight();
         }
 
-	do body.moveTo( tempX, tempY );
+	//do body.moveTo( tempX, tempY );
 
-        do Sys.wait(5); // Delays the next movement.
+        do Sys.wait(20); // Delays the next movement.
         return;
     }
 method void createFoodSquare() {
