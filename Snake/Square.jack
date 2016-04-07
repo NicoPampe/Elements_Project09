@@ -114,25 +114,25 @@ class Square{
     }
 
     method int getX(){
-	return x;
+	   return x;
     }
 
     method int getY(){
-	return y;
+	   return y;
     }
 
-   method int getSize(){
-	return size;
-   }
-
     method void setX(int Ax){
-	let x = Ax;
-	return;
+	   let x = Ax;
+	   return;
     }
 
     method void setY(int Ay){
-	let y = Ay;
-	return;
+	   let y = Ay;
+	   return;
+    }
+
+    method int getSize() {
+        return size;
     }
    
    method void initializeBody(){

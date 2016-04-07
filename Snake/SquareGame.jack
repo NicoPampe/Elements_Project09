@@ -48,11 +48,14 @@ class SquareGame {
 
         let exit = false;
 
+        do createFoodSquare();
+
         while (~exit) {
             // waits for a key to be pressed.
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
+                do doCollisionHeadFood();
             }
 	    if (key = 71) {
 		do square.addBody();
@@ -77,9 +80,9 @@ class SquareGame {
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
+                do doCollisionHeadFood();
             }
         }
-            
         return;
 	}
 
@@ -107,39 +110,84 @@ class SquareGame {
         do Sys.wait(20); // Delays the next movement.
         return;
     }
-method void createFoodSquare() {
-	var int foodSize;
+    
+    method void doCollisionHeadFood() {
+        if (collisionHeadFood()){
+            do foodSquare.erase();
+            do foodSquare.dispose();
+            do createFoodSquare();
+        }
+        return;
+    }
 
- 	let foodSize = 30;
+    /** Checks the collision between the Head of the snake and the food */
+    method boolean collisionHeadFood() {
+        var boolean xCollision, yCollision;
+        let xCollision = false;
+        let yCollision = false;
 
- 	let foodSquare = Square.new(randRange(254 - foodSize),
-			     randRange(254 - foodSize),
-			     foodSize);
- 	return;
-}
+        /* Logic for X */
+        if( (foodSquare.getX() + foodSquare.getSize()) > (square.getX()) ) { 
+            if( (foodSquare.getX() + foodSquare.getSize()) < (square.getX() + square.getSize()) ) {
+                let xCollision = true;
+            }
+        }
+        if( (foodSquare.getX()) > (square.getX()) ) { 
+            if( (foodSquare.getX()) < (square.getX() + square.getSize()) ) {
+                let xCollision = true;
+            }
+        }
 
-/** Return a random number fro 0..range */
-method int randRange(int range) {
- var int mask;
- var int val;
+        /* Logic for Y */
+        if( (foodSquare.getY() + foodSquare.getSize()) > (square.getY()) ) { 
+            if( (foodSquare.getY() + foodSquare.getSize()) < (square.getY() + square.getSize()) ) {
+                let yCollision = true;
+            }
+        }
+        if( (foodSquare.getY()) > (square.getY()) ) { 
+            if( (foodSquare.getY()) < (square.getY() + square.getSize()) ) {
+                let yCollision = true;
+            }
+        }
 
- let mask = 1;
- while (mask < range) {
-     let mask = mask * 2 + 1;
- }
+        /* No collision */
+        return xCollision & yCollision;
+    }
 
- let val = rand() & mask;
- while (val > range) {
-     let val = rand() & mask;
- }
- return val;
-}
+    /** Food square created for the snake to get */
+    method void createFoodSquare() {
+    	var int foodSize;
 
-method int rand() {
- let seed = seed + 20251;
- if (seed < 0) {
-     let seed = seed - 32767 - 1;
- }
- return seed;
-}
+     	let foodSize = 30;
+
+     	let foodSquare = Square.new(randRange(510 - foodSize),
+                                    randRange(254 - foodSize),
+                                    foodSize);
+     	return;
+    }
+
+    /** Return a random number fro 0..range */
+    method int randRange(int range) {
+        var int mask;
+        var int val;
+
+        let mask = 1;
+        while (mask < range) {
+            let mask = mask * 2 + 1;
+        }
+
+        let val = rand() & mask;
+        while (val > range) {
+            let val = rand() & mask;
+        }
+        return val;
+    }
+
+    method int rand() {
+        let seed = seed + 20251;
+        if (seed < 0) {
+            let seed = seed - 32767 - 1;
+        }
+        return seed;
+    }
 }
