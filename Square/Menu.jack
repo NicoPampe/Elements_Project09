@@ -78,32 +78,38 @@ class Menu {
 
     method void drawOptions(){
         do Screen.setColor(true);
+        do Output.moveCursor(0,0);
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(up);
         do Output.println();
         do Output.println();
         do Output.println();
         do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(down);
         do Output.println();
         do Output.println();
         do Output.println();
         do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(left);
         do Output.println();
         do Output.println();
         do Output.println();
         do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(right);
         do Output.println();
         do Output.println();
         do Output.println();
         do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(enter);
         do Output.println();
         do Output.println();
         do Output.println();
         do Output.println();
-        do Output.println();
-        do Output.println();
-        do Output.println();
-        do Output.println();
-        do Output.println();
-
         do Output.printString("           Default                    Return");
         return;
     }
