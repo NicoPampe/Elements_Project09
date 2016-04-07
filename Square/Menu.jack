@@ -62,12 +62,12 @@ class Menu {
         let y = y + 120;
         do Screen.setColor(false);
         do Screen.drawRectangle(360,120,432,220);
-        do Screen.setColor(true);
-        do Screen.drawRectangle(x,y,x+size, y+size);
         let arrow = size/2;
         let arrow = arrow + y;
-        do Screen.drawLine(360,arrow,x-10,y+5);
-        do Screen.drawLine(360,arrow,x-10,y+size - 5);
+        do Screen.setColor(true);
+        do Screen.drawLine(360,arrow,x-15,y+5);
+        do Screen.drawLine(360,arrow,x-15,y+size - 5);
+        do Screen.drawLine(370,arrow,x,arrow);
         return;
     }
 
@@ -76,12 +76,90 @@ class Menu {
         return;
     }
 
+    method void drawOptions(){
+        do Screen.setColor(true);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+
+        do Output.printString("           Default                    Return");
+        return;
+    }
+
+    method void optionsMenu(){
+        do Screen.clearScreen();
+        do drawOptions();
+        while (true) {
+
+        }
+        do Screen.clearScreen();
+        return;
+    }
+
+    method void drawDynamic(boolean togle){
+        var int size;
+        let size = 63;
+        do Screen.setColor(togle);
+        do Screen.drawRectangle(0,0,size,size);
+        do Screen.drawRectangle(size,size,size + size, size + size);
+        do Screen.drawRectangle(0, size + size, size, size + size + size);
+        do Screen.drawRectangle(size,size + size + size, size + size, size + size + size + size + 1);
+        do Screen.setColor(~(togle));
+        do Screen.drawRectangle(size,0,size + size, size);
+        do Screen.drawRectangle(0,size,size,size + size);
+        do Screen.drawRectangle(size,size + size, size + size, size + size + size);
+        do Screen.drawRectangle(0, size + size + size, size, size + size + size + size + 1);
+
+
+        do Screen.setColor(togle);
+        do Screen.drawRectangle(511-size,0,511,size);
+        do Screen.drawRectangle(511-size-size,size,511-size, size + size);
+        do Screen.drawRectangle(511-size, size + size, 511, size + size + size);
+        do Screen.drawRectangle(511-size-size,size+size+size, 511-size, size + size + size + size + 1);
+        do Screen.setColor(~(togle));
+        do Screen.drawRectangle(511-size-size,0,511-size, size);
+        do Screen.drawRectangle(511-size,size,511,size + size);
+        do Screen.drawRectangle(511-size-size,size+size,511-size, size + size + size);
+        do Screen.drawRectangle(511-size, size + size + size, 511, size + size + size + size + 1);
+
+
+
+
+
+
+        return;
+    }
+
     method void run(){
-        var int debounce, pos, key;
-        var boolean control;
+        var int debounce, pos, key, counter;
+        var boolean control, togle;
         let control = true;
         let debounce = 0;
         let pos = 0;
+        let togle = true;
+        let counter = 0;
         do drawStatic();
         do drawPointer(pos);
         while (control){
@@ -108,7 +186,7 @@ class Menu {
                     do drawPointer(pos);
                 }
                 if (pos = 1){
-
+                    do optionsMenu();
                     do drawStatic();
                     do drawPointer(pos);
                 }
@@ -118,6 +196,12 @@ class Menu {
             }
             if (key = 0){
                 let debounce = 0;
+            }
+            let counter = counter + 1;
+            if (counter > 9000){
+                let counter = 0;
+                do drawDynamic(togle);
+                let togle = ~(togle);
             }
         }
         return;
