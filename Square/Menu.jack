@@ -5,6 +5,9 @@ class Menu {
     constructor Menu new(){
         let up = 131;
         let down = 133;
+        let left = 130;
+        let right = 132;
+        let enter = 128;
         return this;
     }
     method void drawStatic() {
@@ -42,27 +45,30 @@ class Menu {
         do Output.println();
         do Output.println();
         do Output.println();
-        do Output.printString("                             Score");
+        do Output.printString("                              Quit");
 
         do Screen.setColor(true);
         do Screen.drawRectangle(160,120,224,220);
 
-	return;
+        return;
 
     }
 
-    method void drawDynamic(int pos){
-        var int x, y, size;
-        let x = 400;
-        let y = pos * 32;
-        let y = y + 120;
+    method void drawPointer(int pos){
+        var int x, y, size, arrow;
+        let x = 390;
         let size = 32;
+        let y = pos * size;
+        let y = y + 120;
         do Screen.setColor(false);
-        do Screen.drawRectangle(x,120,x+size, 220);
-
+        do Screen.drawRectangle(360,120,432,220);
         do Screen.setColor(true);
         do Screen.drawRectangle(x,y,x+size, y+size);
-	return;
+        let arrow = size/2;
+        let arrow = arrow + y;
+        do Screen.drawLine(360,arrow,x-10,y+5);
+        do Screen.drawLine(360,arrow,x-10,y+size - 5);
+        return;
     }
 
     method void dispose() {
@@ -72,29 +78,47 @@ class Menu {
 
     method void run(){
         var int debounce, pos, key;
+        var boolean control;
+        let control = true;
         let debounce = 0;
         let pos = 0;
         do drawStatic();
-        while (true){
+        do drawPointer(pos);
+        while (control){
             let key = Keyboard.keyPressed();
             if (debounce = 0) {
                 let debounce = 1;
                 if (key = up) {
                     if (pos > 0){
                         let pos = pos - 1;
+                        do drawPointer(pos);
                     }
                 }
 
                 if (key = down) {
                     if (pos < 2){
                         let pos = pos + 1;
+                        do drawPointer(pos);
                     }
+                }
+            }
+            if (key = enter){
+                if (pos = 0){
+                    do drawStatic();
+                    do drawPointer(pos);
+                }
+                if (pos = 1){
+
+                    do drawStatic();
+                    do drawPointer(pos);
+                }
+                if (pos = 2){
+                    let control = false;
                 }
             }
             if (key = 0){
                 let debounce = 0;
             }
-            do drawDynamic(pos);
         }
         return;
     }
