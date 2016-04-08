@@ -20,6 +20,7 @@ class SquareGame {
     field int seed;
     //The food square
     field FoodSquare foodSquare;
+    field int score;
 
     // The square's movement direction
     field int direction; // 0=none,1=up,2=down,3=left,4=right
@@ -29,6 +30,8 @@ class SquareGame {
         let square = Square.new(0, 0, 10);
 	do square.initializeBody();
         let direction = 0;
+	let seed = 10;
+	let score = 0;
 
         return this;
     }
@@ -42,15 +45,20 @@ class SquareGame {
 
     /** Starts the game. Handles inputs from the user that control
      *  the square's movement, direction and size. */
-    method void run(int up, int down, int left, int right) {
+    method void run(int up, int down, int left, int right) {	
         var int key;
         var boolean exit;
 
-        let exit = false;
+	let exit = false;
 
         do createFoodSquare();
 
         while (~exit) {
+	    do Output.moveCursor(0,0);
+	    do Output.printString("Score: ");
+	    do Output.printInt(score);
+	    do foodSquare.draw();
+
             // waits for a key to be pressed.
             while (key = 0) {
                 let key = Keyboard.keyPressed();
@@ -58,7 +66,11 @@ class SquareGame {
                 do doCollisionHeadFood();
             }
 	    if (key = 71) {
-		do square.addBody();
+		do foodSquare.erase();
+            	do foodSquare.dispose();
+            	do createFoodSquare();
+	    	do square.addBody();
+	    	let score = score + 10;
             }
             if (key = 81) {
                 let exit = true;
@@ -78,6 +90,11 @@ class SquareGame {
 
             // waits for the key to be released.
             while (~(key = 0)) {
+		//do Output.moveCursor(0,0);
+	    	//do Output.printString("Score: ");
+	    	//do Output.printInt(score);
+	    	//do foodSquare.draw();
+
                 let key = Keyboard.keyPressed();
                 do moveSquare();
                 do doCollisionHeadFood();
@@ -117,6 +134,7 @@ class SquareGame {
             do foodSquare.dispose();
             do createFoodSquare();
 	    do square.addBody();
+	    let score = score + 10; // Score increases by 10 for each square hit.
         }
         return;
     }

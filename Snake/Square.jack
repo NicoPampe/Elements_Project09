@@ -40,7 +40,7 @@ class Square{
         return;
     }
 
-    /** Moves up by 2 pixels. */
+    /** Moves up by 10 pixels. */
     method void moveUp() {	
 	var int tempX, tempY;
         if ((y - size ) > (-1)) {
@@ -59,7 +59,7 @@ class Square{
         return;
     }
 
-    /** Moves down by 2 pixels. */
+    /** Moves down by 10 pixels. */
     method void moveDown() {
 	var int tempX, tempY;
         if ((y + size) < (256 - size )) {
@@ -77,7 +77,7 @@ class Square{
         return;
     }
 
-    /** Moves left by 2 pixels. */
+    /** Moves left by 10 pixels. */
     method void moveLeft() {
 	var int tempX, tempY;
         if ((x - size) > (-1)) {
@@ -95,7 +95,7 @@ class Square{
         return;
     }
 
-    /** Moves right by 2 pixels. */
+    /** Moves right by 10 pixels. */
     method void moveRight() {
 	var int tempX, tempY;
         if ((x + size) < (512 - size)) {
