@@ -42,8 +42,8 @@ class SquareGame {
 
     /** Starts the game. Handles inputs from the user that control
      *  the square's movement, direction and size. */
-    method void run() {
-        var char key;
+    method void run(int up, int down, int left, int right) {
+        var int key;
         var boolean exit;
 
         let exit = false;
@@ -63,16 +63,16 @@ class SquareGame {
             if (key = 81) {
                 let exit = true;
             }
-            if ((key = 131) & ~(direction = 2)) {
+            if ((key = up) & ~(direction = 2)) {
                 let direction = 1;
             }
-            if ((key = 133) & ~(direction = 1)) {
+            if ((key = down) & ~(direction = 1)) {
                 let direction = 2;
             }
-            if ((key = 130) & ~(direction = 4)) {
+            if ((key = left) & ~(direction = 4)) {
                 let direction = 3;
             }
-            if ((key = 132) & ~(direction = 3)) {
+            if ((key = right) & ~(direction = 3)) {
                 let direction = 4;
             }
 

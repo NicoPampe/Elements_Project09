@@ -329,7 +329,8 @@ class Menu {
                 if (key = enter){
                     if (pos = 0){
                         do Screen.clearScreen();
-                        do game.run();
+                        do game.run(up,down,left,right);
+                        do Screen.clearScreen();
                         do drawStatic();
                         do drawPointer(pos);
                     }
