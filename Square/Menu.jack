@@ -1,0 +1,354 @@
+class Menu {
+
+    field int up,down,left,right,enter;
+
+    constructor Menu new(){
+        let up = 131;
+        let down = 133;
+        let left = 130;
+        let right = 132;
+        let enter = 128;
+        return this;
+    }
+    method void drawStatic() {
+        do Output.moveCursor(0,0);
+        do Output.println();
+        do Output.printString("                      Snake Game");
+
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(160,120,352,220);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(224,128,288,144);
+        do Screen.drawRectangle(224,162,288,178);
+        do Screen.drawRectangle(224,192,288,212); 
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                              Play");
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                             Options");
+
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                              Quit");
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(160,120,224,220);
+
+        return;
+
+    }
+
+    method void drawPointer(int pos){
+        var int x, y, size, arrow;
+        let x = 390;
+        let size = 32;
+        let y = pos * size;
+        let y = y + 120;
+        do Screen.setColor(false);
+        do Screen.drawRectangle(360,120,432,220);
+        let arrow = size/2;
+        let arrow = arrow + y;
+        do Screen.setColor(true);
+        do Screen.drawLine(360,arrow,x-15,y+5);
+        do Screen.drawLine(360,arrow,x-15,y+size - 5);
+        do Screen.drawLine(360,arrow,x,arrow);
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void drawOptionsPointer(int pos){
+        var int x,y;
+        do Screen.setColor(false);
+        do Screen.drawRectangle(192,0,256,215);
+        do Screen.drawRectangle(0,245,500,255);
+        if (pos < 5){
+            let y = 43 * pos;
+            let y = y + 20;
+            let x = 192;
+            do Screen.setColor(true);
+            do Screen.drawLine(200,y,230,y);
+            do Screen.drawLine(200,y,215,y+16);
+            do Screen.drawLine(200,y,215,y-16);
+        }
+        else {
+            do Screen.setColor(true);
+            if (pos = 5){
+                do Screen.drawRectangle(64,245,192,255);
+            }
+            else {
+                do Screen.drawRectangle(280,245,408,255);
+            }
+        }
+
+        return;
+    }
+
+    method int getKeyInput(){
+        var int key;
+        var boolean press;
+        let press = true;
+        while(press){
+            let key = Keyboard.keyPressed();
+            if (key = 0){
+                let press = false;
+            }
+        }
+        while (key = 0){
+            let key = Keyboard.keyPressed();
+        }
+        return key;
+    }
+
+    method void drawOptions(){
+        do Screen.clearScreen();
+
+        do Screen.setColor(true);
+        do Output.moveCursor(0,0);
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(up);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(down);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(left);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(right);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("                    ");
+        do Output.printInt(enter);
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("           Default                       Return");
+
+        do Screen.drawRectangle(0, 0, 128,218);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(32,3,128-32,43);
+        do Screen.drawRectangle(32,46,128-32,86);
+        do Screen.drawRectangle(32,89,128-32,129);
+        do Screen.drawRectangle(32,132,128-32,172);
+        do Screen.drawRectangle(32,175,128-32,215);
+
+        do Screen.setColor(true);
+        do Screen.drawLine(64,40,64,10);
+        do Screen.drawLine(56,25,64,10);
+        do Screen.drawLine(64,10,72,25);
+
+        do Screen.drawLine(64,50,64,80);
+        do Screen.drawLine(56,65,64,80);
+        do Screen.drawLine(64,80,72,65);
+
+        do Screen.drawLine(40,109,90,109);
+        do Screen.drawLine(40,109,65,95);
+        do Screen.drawLine(40,109,65,125);
+
+        do Screen.drawLine(40,152,90,152);
+        do Screen.drawLine(90,152,65,135);
+        do Screen.drawLine(90,152,65,169);
+
+        do Screen.drawLine(40,200,90,200);
+        do Screen.drawLine(40,200,50,190);
+        do Screen.drawLine(40,200,50,210);
+        do Screen.drawLine(90,200,90,180);
+
+        return;
+    }
+
+    method void optionsMenu(){
+        var int pos,key, debounce;
+        var boolean switch;
+        let switch = true;
+        let pos = 0;
+        let debounce = 1;
+        do drawOptions();
+        do drawOptionsPointer(pos);
+        while (switch) {
+            let key = Keyboard.keyPressed();
+            if (debounce = 0) {
+                let debounce = 1;
+                if (key = up) {
+                    if (pos > 0){
+                        let pos = pos - 1;
+                        do drawOptionsPointer(pos);
+                    }
+                }
+                if (key = down) {
+                    if (pos < 6){
+                        let pos = pos + 1;
+                        do drawOptionsPointer(pos);
+                    }
+                }
+                if (key = enter){
+                    if (pos = 0){
+                        let up = getKeyInput();
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+                    }
+                    if (pos = 1){
+                        let down = getKeyInput();
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+                    }
+                    if (pos = 2){
+                        let left = getKeyInput();
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+                    }
+                    if (pos = 3){
+                        let right = getKeyInput();
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+                    }
+                    if (pos = 4){
+                        let enter = getKeyInput();
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+                    }
+                    if (pos = 5){
+                        let up = 131;
+                        let down = 133;
+                        let left = 130;
+                        let right = 132;
+                        let enter = 128;
+                        do drawOptions();
+                        do drawOptionsPointer(pos);
+
+                    }
+                    if (pos = 6){
+                        let switch = false;
+                    }
+                }
+            }
+            if (key = 0){
+                let debounce = 0;
+            }
+        }
+        do Screen.clearScreen();
+        return;
+    }
+
+    method void drawDynamic(boolean togle){
+        var int size;
+        let size = 63;
+        do Screen.setColor(togle);
+        do Screen.drawRectangle(0,0,size,size);
+        do Screen.drawRectangle(size,size,size + size, size + size);
+        do Screen.drawRectangle(0, size + size, size, size + size + size);
+        do Screen.drawRectangle(size,size + size + size, size + size, size + size + size + size + 1);
+        do Screen.setColor(~(togle));
+        do Screen.drawRectangle(size,0,size + size, size);
+        do Screen.drawRectangle(0,size,size,size + size);
+        do Screen.drawRectangle(size,size + size, size + size, size + size + size);
+        do Screen.drawRectangle(0, size + size + size, size, size + size + size + size + 1);
+
+
+        do Screen.setColor(togle);
+        do Screen.drawRectangle(511-size,0,511,size);
+        do Screen.drawRectangle(511-size-size,size,511-size, size + size);
+        do Screen.drawRectangle(511-size, size + size, 511, size + size + size);
+        do Screen.drawRectangle(511-size-size,size+size+size, 511-size, size + size + size + size + 1);
+        do Screen.setColor(~(togle));
+        do Screen.drawRectangle(511-size-size,0,511-size, size);
+        do Screen.drawRectangle(511-size,size,511,size + size);
+        do Screen.drawRectangle(511-size-size,size+size,511-size, size + size + size);
+        do Screen.drawRectangle(511-size, size + size + size, 511, size + size + size + size + 1);
+
+
+
+
+
+
+        return;
+    }
+
+    method void run(){
+        var int debounce, pos, key, counter;
+        var boolean control, togle;
+        let control = true;
+        let debounce = 0;
+        let pos = 0;
+        let togle = true;
+        let counter = 0;
+        do drawStatic();
+        do drawPointer(pos);
+        while (control){
+            let key = Keyboard.keyPressed();
+            if (debounce = 0) {
+                let debounce = 1;
+                if (key = up) {
+                    if (pos > 0){
+                        let pos = pos - 1;
+                        do drawPointer(pos);
+                    }
+                }
+
+                if (key = down) {
+                    if (pos < 2){
+                        let pos = pos + 1;
+                        do drawPointer(pos);
+                    }
+                }
+                if (key = enter){
+                    if (pos = 0){
+                        do drawStatic();
+                        do drawPointer(pos);
+                    }
+                    if (pos = 1){
+                        do optionsMenu();
+                        do drawStatic();
+                        do drawPointer(pos);
+                    }
+                    if (pos = 2){
+                        let control = false;
+                    }
+                }
+            }
+            if (key = 0){
+                let debounce = 0;
+            }
+            let counter = counter + 1;
+            if (counter > 9000){
+                let counter = 0;
+                do drawDynamic(togle);
+                let togle = ~(togle);
+            }
+        }
+        return;
+    }
+}
