@@ -300,6 +300,8 @@ class Menu {
     method void run(){
         var int debounce, pos, key, counter;
         var boolean control, togle;
+        var SquareGame game;
+        let game = SquareGame.new();
         let control = true;
         let debounce = 0;
         let pos = 0;
@@ -326,6 +328,8 @@ class Menu {
                 }
                 if (key = enter){
                     if (pos = 0){
+                        do Screen.clearScreen();
+                        do game.run();
                         do drawStatic();
                         do drawPointer(pos);
                     }
@@ -349,6 +353,7 @@ class Menu {
                 let togle = ~(togle);
             }
         }
+        do game.dispose();
         return;
     }
 }
