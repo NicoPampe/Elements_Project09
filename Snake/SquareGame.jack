@@ -49,28 +49,38 @@ class SquareGame {
         var int key;
         var boolean exit;
 
-	let exit = false;
+		let exit = false;
 
         do createFoodSquare();
 
         while (~exit) {
-	    do Output.moveCursor(0,0);
-	    do Output.printString("Score: ");
-	    do Output.printInt(score);
-	    do foodSquare.draw();
+			do Output.moveCursor(0,0);
+			do Output.printString("Score: ");
+			do Output.printInt(score);
+			do foodSquare.draw();
+			if( square.isBodyCollision() ){
+				let exit = true;
+			}
 
             // waits for a key to be pressed.
             while (key = 0) {
                 let key = Keyboard.keyPressed();
-                do moveSquare();
+                let exit = moveSquare();
+				if( exit ){
+					return;
+				}
                 do doCollisionHeadFood();
+				if( square.isBodyCollision() ){
+					//let exit = true;
+					return;
+				}
             }
-	    if (key = 71) {
-		do foodSquare.erase();
+			if (key = 71) {
+				do foodSquare.erase();
             	do foodSquare.dispose();
             	do createFoodSquare();
-	    	do square.addBody();
-	    	let score = score + 10;
+				do square.addBody();
+				let score = score + 10;
             }
             if (key = 81) {
                 let exit = true;
@@ -90,42 +100,53 @@ class SquareGame {
 
             // waits for the key to be released.
             while (~(key = 0)) {
-		//do Output.moveCursor(0,0);
-	    	//do Output.printString("Score: ");
-	    	//do Output.printInt(score);
-	    	//do foodSquare.draw();
+				//do Output.moveCursor(0,0);
+				//do Output.printString("Score: ");
+				//do Output.printInt(score);
+				//do foodSquare.draw();
 
                 let key = Keyboard.keyPressed();
-                do moveSquare();
+                let exit = moveSquare();
                 do doCollisionHeadFood();
+				if( square.isBodyCollision() ){
+					let exit = true;
+				}
             }
         }
         return;
 	}
 
     /** Moves the square by 2 pixels in the current direction. */
-    method void moveSquare() {
+    method bool moveSquare() {
 	//var int tempX, tempY;
 	//let tempX = square.getX();
 	//let tempY = square.getY();
 
         if (direction = 1) {
-            do square.moveUp();
+            if( ~(square.moveUp()) ){
+				return true;
+			}
         }
         if (direction = 2) {
-            do square.moveDown();
+            if( ~(square.moveDown())){
+				return true;
+			}
         }
         if (direction = 3) {
-            do square.moveLeft();
+            if( ~(square.moveLeft())){
+				return true;
+			}
         }
         if (direction = 4) {
-            do square.moveRight();
+            if( ~(square.moveRight())){
+				return true;
+			}
         }
 
 	//do body.moveTo( tempX, tempY );
 
         do Sys.wait(30); // Delays the next movement.
-        return;
+        return false;
     }
     
     method void doCollisionHeadFood() {
@@ -141,36 +162,25 @@ class SquareGame {
 
     /** Checks the collision between the Head of the snake and the food */
     method boolean collisionHeadFood() {
-        var boolean xCollision, yCollision;
-        let xCollision = false;
-        let yCollision = false;
-
-        /* Logic for X */
-        if( (foodSquare.getX() + foodSquare.getSize()) > (square.getX()) ) { 
-            if( (foodSquare.getX() + foodSquare.getSize()) < (square.getX() + square.getSize()) ) {
-                let xCollision = true;
-            }
-        }
-        if( (foodSquare.getX()) > (square.getX()) ) { 
-            if( (foodSquare.getX()) < (square.getX() + square.getSize()) ) {
-                let xCollision = true;
-            }
-        }
-
-        /* Logic for Y */
-        if( (foodSquare.getY() + foodSquare.getSize()) > (square.getY()) ) { 
-            if( (foodSquare.getY() + foodSquare.getSize()) < (square.getY() + square.getSize()) ) {
-                let yCollision = true;
-            }
-        }
-        if( (foodSquare.getY()) > (square.getY()) ) { 
-            if( (foodSquare.getY()) < (square.getY() + square.getSize()) ) {
-                let yCollision = true;
-            }
-        }
-
-        /* No collision */
-        return xCollision & yCollision;
+		var boolean w, x, y, z;
+        let w = false;
+        let x = false;
+		let y = false;
+		let z = false;
+		
+		if( ((foodSquare.getX() - square.getX() ) < 10 ) & ((foodSquare.getY() - square.getY() ) < 10 )){
+			let w = true;
+		}
+		if( ((square.getX() - foodSquare.getX() ) < 10 ) & ((foodSquare.getY() - square.getY() ) < 10 )){
+			let x = true;
+		}
+		if( ((foodSquare.getX() - square.getX() ) < 10 ) & ((square.getY() - foodSquare.getY() ) < 10 )){
+			let y = true;
+		}
+		if( ((square.getX() - foodSquare.getX() ) < 10 ) & ((square.getY() - foodSquare.getY() ) < 10 )){
+			let z = true;
+		}
+		return w & x & y & z;
     }
 
     /** Food square created for the snake to get */

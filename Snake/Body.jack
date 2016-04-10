@@ -40,4 +40,38 @@ class Body{
 		}
 		return;
 	}
+	
+	method bool isBodyCollision(int Ax, int Ay){
+		if( squareCollision(Ax, Ay) ){
+			return true;
+		}
+		if( nextBody = null ){
+			return false;
+		}
+		else {
+			return nextBody.isBodyCollision(Ax, Ay);
+		}
+	}
+	
+	method bool squareCollision(int Ax, int Ay){
+		var boolean w, x, y, z;
+        let w = false;
+        let x = false;
+		let y = false;
+		let z = false;
+		
+		if( ((body.getX() - Ax ) < 10 ) & ((body.getY() - Ay ) < 10 )){
+			let w = true;
+		}
+		if( ((Ax - body.getX() ) < 10 ) & ((body.getY() - Ay ) < 10 )){
+			let x = true;
+		}
+		if( ((body.getX() - Ax ) < 10 ) & ((Ay - body.getY() ) < 10 )){
+			let y = true;
+		}
+		if( ((Ax - body.getX() ) < 10 ) & ((Ay - body.getY() ) < 10 )){
+			let z = true;
+		}
+		return w & x & y & z;
+	}
 }

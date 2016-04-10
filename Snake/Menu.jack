@@ -330,6 +330,8 @@ class Menu {
                     if (pos = 0){
                         do Screen.clearScreen();
                         do game.run(up,down,left,right);
+						do game.dispose();
+						let game = SquareGame.new();
                         do Screen.clearScreen();
                         do drawStatic();
                         do drawPointer(pos);

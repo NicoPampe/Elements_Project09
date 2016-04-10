@@ -41,7 +41,7 @@ class Square{
     }
 
     /** Moves up by 10 pixels. */
-    method void moveUp() {	
+    method bool moveUp() {	
 	var int tempX, tempY;
         if ((y - size ) > (-1)) {
 
@@ -55,30 +55,36 @@ class Square{
 	    do body.moveTo( tempX, tempY );
             //do Screen.setColor(true);
             //do Screen.drawRectangle(x, y, x + size, y + 1);
+			return true;
         }
-        return;
+        else{
+			return false;
+		}
     }
 
     /** Moves down by 10 pixels. */
-    method void moveDown() {
-	var int tempX, tempY;
+    method bool moveDown() {
+		var int tempX, tempY;
         if ((y + size) < (256 - size )) {
             //do Screen.setColor(false);
             //do Screen.drawRectangle(x, y, x + size, y + 1);
-	    let tempX = x;
+			let tempX = x;
             let tempY = y;
-	    do erase();
+			do erase();
             let y = y + size;
-	    do draw();
-	    do body.moveTo( tempX, tempY );
+			do draw();
+			do body.moveTo( tempX, tempY );
             //do Screen.setColor(true);
             //do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+			return true;
         }
-        return;
+        else{
+			return false;
+		}
     }
 
     /** Moves left by 10 pixels. */
-    method void moveLeft() {
+    method bool moveLeft() {
 	var int tempX, tempY;
         if ((x - size) > (-1)) {
             //do Screen.setColor(false);
@@ -91,12 +97,15 @@ class Square{
 	    do body.moveTo( tempX, tempY );
             //do Screen.setColor(true);
             //do Screen.drawRectangle(x, y, x + 1, y + size);
+			return true;
         }
-        return;
+        else{
+			return false;
+		}
     }
 
     /** Moves right by 10 pixels. */
-    method void moveRight() {
+    method bool moveRight() {
 	var int tempX, tempY;
         if ((x + size) < (512 - size)) {
             //do Screen.setColor(false);
@@ -109,8 +118,11 @@ class Square{
 	    do body.moveTo( tempX, tempY );
             //do Screen.setColor(true);
             //do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+			return true;
         }
-        return;
+		else{
+			return false;
+		}
     }
 
     method int getX(){
@@ -144,4 +156,11 @@ class Square{
 	do body.addBody();
 	return;
    }
+   
+   method bool isBodyCollision(){
+		if( body = null ){
+			return false;
+		}
+		return body.isBodyCollision(x, y);
+	}
 }
